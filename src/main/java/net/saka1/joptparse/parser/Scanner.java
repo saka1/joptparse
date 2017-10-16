@@ -35,7 +35,7 @@ public class Scanner {
         return currentIndex;
     }
 
-    public boolean isEof() {
+    public boolean isEos() {
         return currentIndex == source.length();
     }
 }

@@ -1,6 +1,6 @@
 package net.saka1.joptparse;
 
-import net.saka1.joptparse.utils.Util;
+import net.saka1.joptparse.util.Util;
 import org.junit.Test;
 
 import java.util.Arrays;

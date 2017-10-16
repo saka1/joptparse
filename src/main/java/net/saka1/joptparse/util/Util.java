@@ -1,4 +1,4 @@
-package net.saka1.joptparse.utils;
+package net.saka1.joptparse.util;
 
 import java.util.*;
 import java.util.stream.Collectors;

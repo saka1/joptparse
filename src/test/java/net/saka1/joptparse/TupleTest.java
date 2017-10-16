@@ -1,6 +1,6 @@
 package net.saka1.joptparse;
 
-import net.saka1.joptparse.utils.Tuple;
+import net.saka1.joptparse.util.Tuple;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;

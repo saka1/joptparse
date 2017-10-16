@@ -6,7 +6,7 @@ import net.saka1.joptparse.annotation.ParseInfo;
 import net.saka1.joptparse.annotation.ParseSucceeded;
 import net.saka1.joptparse.parser.ParseResult;
 import net.saka1.joptparse.parser.Parser;
-import net.saka1.joptparse.utils.Tuple;
+import net.saka1.joptparse.util.Tuple;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

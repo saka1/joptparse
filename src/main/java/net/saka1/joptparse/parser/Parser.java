@@ -1,12 +1,12 @@
 package net.saka1.joptparse.parser;
 
 import net.saka1.joptparse.OptionSpec;
-import net.saka1.joptparse.utils.Tuple;
+import net.saka1.joptparse.util.Tuple;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static net.saka1.joptparse.utils.Util.*;
+import static net.saka1.joptparse.util.Util.*;
 
 /**
  * CommandLine parser.
@@ -29,14 +29,14 @@ public class Parser {
         String arg = head(list);
         Scanner scanner = new Scanner(arg);
         if (scanner.scan("-").isPresent()) {
-            if (scanner.isEof()) {
+            if (scanner.isEos()) {
                 // case: "-"
                 //TODO right behavior?
                 return ParseResult.operandsOf("-")
                         .merge(doParse(tail(list)));
             } else if (scanner.scan("-").isPresent()) {
                 // case: "--"
-                if (scanner.isEof()) {
+                if (scanner.isEos()) {
                     List<String> rest = tail(list);
                     return rest.stream()
                             .map(ParseResult::operandsOf)

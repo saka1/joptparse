@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public class OptionSpec {
-
     private final Map<String, OptionArgumentType> shortNames;
     private final Map<String, OptionArgumentType> longNames;
 

@@ -1,7 +1,7 @@
 package net.saka1.joptparse.parser;
 
-import net.saka1.joptparse.utils.Tuple;
-import net.saka1.joptparse.utils.Util;
+import net.saka1.joptparse.util.Tuple;
+import net.saka1.joptparse.util.Util;
 
 import java.util.*;
 import java.util.function.BinaryOperator;

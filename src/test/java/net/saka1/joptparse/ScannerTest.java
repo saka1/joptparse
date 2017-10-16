@@ -40,9 +40,9 @@ public class ScannerTest {
 
     @Test
     public void isEof() {
-        assertThat(scanner.isEof(), is(false));
+        assertThat(scanner.isEos(), is(false));
         scanner.scan("abc");
-        assertThat(scanner.isEof(), is(true));
+        assertThat(scanner.isEos(), is(true));
     }
 
 
@@ -52,7 +52,7 @@ public class ScannerTest {
         scanner.scan("a");
         Optional<String> result = scanner.scan("a");
         assertThat(result, is(Optional.empty()));
-        assertThat(scanner.isEof(), is(true));
+        assertThat(scanner.isEos(), is(true));
     }
 
     @Test

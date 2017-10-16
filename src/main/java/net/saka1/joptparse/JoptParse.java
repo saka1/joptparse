@@ -2,6 +2,7 @@ package net.saka1.joptparse;
 
 import net.saka1.joptparse.annotation.Operands;
 import net.saka1.joptparse.annotation.Option;
+import net.saka1.joptparse.annotation.ParseInfo;
 import net.saka1.joptparse.annotation.ParseSucceeded;
 import net.saka1.joptparse.parser.ParseResult;
 import net.saka1.joptparse.parser.Parser;
@@ -52,6 +53,13 @@ public class JoptParse {
                 String name = parseSucceededName.get();
                 instance.getClass().getField(name).setBoolean(instance, parseResult.isSucceeded());
             }
+            // pass parse info
+            Optional<String> parseInfoName = resolveParseInfoName(clazz);
+            if (parseInfoName.isPresent()) {
+                String name = parseInfoName.get();
+                //TODO rethink pass instance
+                instance.getClass().getField(name).set(instance, parseResult.getErrors());
+            }
             return instance;
         } catch (ReflectiveOperationException e) {
             //TODO rethink error handling
@@ -100,16 +108,22 @@ public class JoptParse {
         return result;
     }
 
+    private static Optional<String> resolveParseInfoName(Class<?> clazz) {
+        return findFirstAnnotatedFieldName(clazz, ParseInfo.class);
+    }
+
     private static Optional<String> resolveParseSucceededName(Class<?> clazz) {
-        return annotationStream(clazz)
-                .filter(tuple -> tuple.second instanceof ParseSucceeded)
-                .findFirst()
-                .map(tuple -> tuple.first.getName());
+        return findFirstAnnotatedFieldName(clazz, ParseSucceeded.class);
     }
 
     private static Optional<String> resolveOperandsName(Class<?> clazz) {
+        return findFirstAnnotatedFieldName(clazz, Operands.class);
+    }
+
+    private static Optional<String> findFirstAnnotatedFieldName(
+            Class<?> clazz, Class<? extends Annotation> annotation) {
         return annotationStream(clazz)
-                .filter(tuple -> tuple.second instanceof Operands)
+                .filter(tuple -> annotation.isInstance(tuple.second))
                 .findFirst()
                 .map(tuple -> tuple.first.getName());
     }

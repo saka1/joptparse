@@ -2,6 +2,7 @@ package net.saka1.joptparse;
 
 import net.saka1.joptparse.annotation.Operands;
 import net.saka1.joptparse.annotation.Option;
+import net.saka1.joptparse.annotation.ParseInfo;
 import net.saka1.joptparse.annotation.ParseSucceeded;
 import org.junit.Test;
 
@@ -24,6 +25,8 @@ public class JoptParseTest {
         public List<String> operands;
         @ParseSucceeded
         public boolean isParseSucceeded;
+        @ParseInfo
+        public List<String> parseInfo;
     }
 
     @Test
@@ -32,6 +35,7 @@ public class JoptParseTest {
         assertThat(args.optionX, is(true));
         assertThat(args.optionY, is("foo"));
         assertThat(args.isParseSucceeded, is(true));
+        assertThat(args.parseInfo, notNullValue());
     }
 
     @Test

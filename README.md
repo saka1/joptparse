@@ -13,13 +13,21 @@ public class Demo {
       public boolean verbose;
       @Operands
       public List<String> operands;
+      @ParseSucceeded
+      public boolean isParseSucceeded;
+      @ParseInfo
+      public List<String> parseInfo;
   }
   
   public static void main(String... args) {
       Args arguments = JoptParse.parse(Args.class, args);
-      System.out.println("input: " + arguments.input);
-      System.out.println("verbose: " + arguments.verbose);
-      System.out.println("operands: " + arugments.operands);
+      if (arguments.isParseSucceeded) {
+          System.out.println("input: " + arguments.input);
+          System.out.println("verbose: " + arguments.verbose);
+          System.out.println("operands: " + arugments.operands);
+      } else {
+          System.out.println("parse error info: " + arguments.parseInfo);
+      }
   }
 }
 ```

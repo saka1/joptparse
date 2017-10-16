@@ -2,7 +2,7 @@ package net.saka1.joptparse;
 
 import net.saka1.joptparse.annotation.Operands;
 import net.saka1.joptparse.annotation.Option;
-import net.saka1.joptparse.annotation.ParseInfo;
+import net.saka1.joptparse.annotation.FailedReason;
 import net.saka1.joptparse.annotation.ParseSucceeded;
 import org.junit.Test;
 
@@ -11,9 +11,10 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class JoptParseTest {
+public class JOptParseTest {
 
     @SuppressWarnings("WeakerAccess")
     static class Args {
@@ -21,30 +22,32 @@ public class JoptParseTest {
         public boolean optionX;
         @Option(name = "y")
         public String optionY;
+        @Option(name = "z")
+        public String optionZ;
         @Operands
         public List<String> operands;
         @ParseSucceeded
         public boolean isParseSucceeded;
-        @ParseInfo
-        public List<String> parseInfo;
+        @FailedReason
+        public List<String> reason;
     }
 
     @Test
     public void option() {
-        Args args = JoptParse.parse(Args.class, new String[]{"-x", "-y", "foo"});
+        Args args = JOptParse.parse(Args.class, new String[]{"-x", "-y", "foo"});
         assertThat(args.optionX, is(true));
         assertThat(args.optionY, is("foo"));
+        assertThat(args.optionZ, nullValue());
         assertThat(args.isParseSucceeded, is(true));
-        assertThat(args.parseInfo, notNullValue());
+        assertThat(args.reason, notNullValue());
     }
 
     @Test
     public void operands() {
-        Args args = JoptParse.parse(Args.class, new String[]{"a", "b", "c"});
+        Args args = JOptParse.parse(Args.class, new String[]{"a", "b", "c"});
         assertThat(args, notNullValue());
         assertThat(args.operands, is(Arrays.asList("a", "b", "c")));
     }
-
 
     @SuppressWarnings("WeakerAccess")
     public static class LongArgs {
@@ -56,7 +59,7 @@ public class JoptParseTest {
 
     @Test
     public void longOption() {
-        LongArgs args = JoptParse.parse(LongArgs.class, new String[]{"--xxx", "--yyy=foo"});
+        LongArgs args = JOptParse.parse(LongArgs.class, new String[]{"--xxx", "--yyy=foo"});
         assertThat(args.optionX, is(true));
         assertThat(args.optionY, is("foo"));
     }

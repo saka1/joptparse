@@ -2,7 +2,7 @@ package net.saka1.joptparse;
 
 import net.saka1.joptparse.annotation.Operands;
 import net.saka1.joptparse.annotation.Option;
-import net.saka1.joptparse.annotation.ParseInfo;
+import net.saka1.joptparse.annotation.FailedReason;
 import net.saka1.joptparse.annotation.ParseSucceeded;
 import net.saka1.joptparse.parser.ParseResult;
 import net.saka1.joptparse.parser.Parser;
@@ -16,8 +16,26 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class JoptParse {
+public class JOptParse<T> {
+    private final Class<T> argsClazz;
+    public JOptParse(Class<T> clazz) {
+        this.argsClazz = clazz;
+    }
+
+    public T parse(String[] args) {
+        return parse(this.argsClazz, args);
+    }
+
+    public String usage() {
+        throw new IllegalStateException("no implementation yet."); //TODO
+    }
+
+    /** Shorthand version of JOptParse#parse. */
     public static <T> T parse(Class<T> clazz, String[] args) {
+        return doParse(clazz, args);
+    }
+
+    private static <T> T doParse(Class<T> clazz, String[] args) {
         OptionSpec optionSpec = setupOptionSpec(clazz);
         Parser parser = new Parser(optionSpec);
         ParseResult parseResult = parser.parse(args);
@@ -109,7 +127,7 @@ public class JoptParse {
     }
 
     private static Optional<String> resolveParseInfoName(Class<?> clazz) {
-        return findFirstAnnotatedFieldName(clazz, ParseInfo.class);
+        return findFirstAnnotatedFieldName(clazz, FailedReason.class);
     }
 
     private static Optional<String> resolveParseSucceededName(Class<?> clazz) {

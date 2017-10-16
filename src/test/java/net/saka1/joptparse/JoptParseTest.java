@@ -2,6 +2,7 @@ package net.saka1.joptparse;
 
 import net.saka1.joptparse.annotation.Operands;
 import net.saka1.joptparse.annotation.Option;
+import net.saka1.joptparse.annotation.ParseSucceeded;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -17,12 +18,12 @@ public class JoptParseTest {
     static class Args {
         @Option(name = "x")
         public boolean optionX;
-
         @Option(name = "y")
         public String optionY;
-
         @Operands
         public List<String> operands;
+        @ParseSucceeded
+        public boolean isParseSucceeded;
     }
 
     @Test
@@ -30,6 +31,7 @@ public class JoptParseTest {
         Args args = JoptParse.parse(Args.class, new String[]{"-x", "-y", "foo"});
         assertThat(args.optionX, is(true));
         assertThat(args.optionY, is("foo"));
+        assertThat(args.isParseSucceeded, is(true));
     }
 
     @Test

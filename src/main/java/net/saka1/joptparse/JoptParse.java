@@ -2,6 +2,7 @@ package net.saka1.joptparse;
 
 import net.saka1.joptparse.annotation.Operands;
 import net.saka1.joptparse.annotation.Option;
+import net.saka1.joptparse.annotation.ParseSucceeded;
 import net.saka1.joptparse.parser.ParseResult;
 import net.saka1.joptparse.parser.Parser;
 import net.saka1.joptparse.utils.Tuple;
@@ -44,6 +45,12 @@ public class JoptParse {
             if (operandsName.isPresent()) { // Optional#map() is not good choice here, because of Checked Exception
                 String name = operandsName.get();
                 instance.getClass().getField(name).set(instance, parseResult.getOperands());
+            }
+            // pass whether parse succeeded or failed
+            Optional<String> parseSucceededName = resolveParseSucceededName(clazz);
+            if (parseSucceededName.isPresent()) {
+                String name = parseSucceededName.get();
+                instance.getClass().getField(name).setBoolean(instance, parseResult.isSucceeded());
             }
             return instance;
         } catch (ReflectiveOperationException e) {
@@ -91,6 +98,13 @@ public class JoptParse {
                     result.put(tuple.second.longName(), tuple.first.getName());
                 });
         return result;
+    }
+
+    private static Optional<String> resolveParseSucceededName(Class<?> clazz) {
+        return annotationStream(clazz)
+                .filter(tuple -> tuple.second instanceof ParseSucceeded)
+                .findFirst()
+                .map(tuple -> tuple.first.getName());
     }
 
     private static Optional<String> resolveOperandsName(Class<?> clazz) {

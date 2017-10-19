@@ -2,6 +2,8 @@
 # joptparse
 Databind based Command Line parser.
 
+[![Build Status](https://travis-ci.org/saka1/joptparse.svg?branch=master)](https://travis-ci.org/saka1/joptparse)
+
 ## Example
 
 ```java

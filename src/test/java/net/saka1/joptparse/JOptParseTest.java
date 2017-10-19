@@ -1,20 +1,18 @@
 package net.saka1.joptparse;
 
+import net.saka1.joptparse.annotation.FailedReason;
 import net.saka1.joptparse.annotation.Operands;
 import net.saka1.joptparse.annotation.Option;
-import net.saka1.joptparse.annotation.FailedReason;
 import net.saka1.joptparse.annotation.ParseSucceeded;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class JOptParseTest {
+class JOptParseTest {
 
     @SuppressWarnings("WeakerAccess")
     static class Args {
@@ -33,7 +31,7 @@ public class JOptParseTest {
     }
 
     @Test
-    public void option() {
+    void option() {
         Args args = JOptParse.parse(Args.class, new String[]{"-x", "-y", "foo"});
         assertThat(args.optionX, is(true));
         assertThat(args.optionY, is("foo"));
@@ -43,7 +41,7 @@ public class JOptParseTest {
     }
 
     @Test
-    public void operands() {
+    void operands() {
         Args args = JOptParse.parse(Args.class, new String[]{"a", "b", "c"});
         assertThat(args, notNullValue());
         assertThat(args.operands, is(Arrays.asList("a", "b", "c")));
@@ -58,7 +56,7 @@ public class JOptParseTest {
     }
 
     @Test
-    public void longOption() {
+    void longOption() {
         LongArgs args = JOptParse.parse(LongArgs.class, new String[]{"--xxx", "--yyy=foo"});
         assertThat(args.optionX, is(true));
         assertThat(args.optionY, is("foo"));

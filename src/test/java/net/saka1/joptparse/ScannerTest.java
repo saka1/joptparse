@@ -1,8 +1,8 @@
 package net.saka1.joptparse;
 
 import net.saka1.joptparse.parser.Scanner;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
@@ -10,17 +10,17 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @SuppressWarnings("ConstantConditions") // To suppress warning about Optional#get()
-public class ScannerTest {
+class ScannerTest {
 
     private Scanner scanner;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void setup() {
         scanner = new Scanner("abc");
     }
 
     @Test
-    public void scanMatch() {
+    void scanMatch() {
         assertThat(scanner.getCurrentIndex(), is(0));
         Optional<String> result = scanner.scan("ab");
         assertThat(result.get(), is("ab"));
@@ -32,14 +32,14 @@ public class ScannerTest {
     }
 
     @Test
-    public void scanNotMatch() {
+    void scanNotMatch() {
         Optional<String> result = scanner.scan("b");
         assertThat(result, is(Optional.empty()));
         assertThat(scanner.getCurrentIndex(), is(0));
     }
 
     @Test
-    public void isEof() {
+    void isEof() {
         assertThat(scanner.isEos(), is(false));
         scanner.scan("abc");
         assertThat(scanner.isEos(), is(true));
@@ -47,7 +47,7 @@ public class ScannerTest {
 
 
     @Test
-    public void scanAtEnd() {
+    void scanAtEnd() {
         Scanner scanner = new Scanner("a");
         scanner.scan("a");
         Optional<String> result = scanner.scan("a");
@@ -56,19 +56,19 @@ public class ScannerTest {
     }
 
     @Test
-    public void scanMatchAsPattern() {
+    void scanMatchAsPattern() {
         Optional<String> result = scanner.scanRegexp("a.?");
         assertThat(result.get(), is("ab"));
     }
 
     @Test
-    public void scanNotMatchAsPattern() {
+    void scanNotMatchAsPattern() {
         Optional<String> result = scanner.scanRegexp("c");
         assertThat(result, is(Optional.empty()));
     }
 
     @Test
-    public void scanRegexpStep() {
+    void scanRegexpStep() {
         scanner.scanRegexp("a");
         Optional<String> result = scanner.scanRegexp("b");
         assertThat(result.get(), is("b"));

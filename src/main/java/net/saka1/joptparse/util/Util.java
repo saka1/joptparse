@@ -1,6 +1,9 @@
 package net.saka1.joptparse.util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public final class Util {

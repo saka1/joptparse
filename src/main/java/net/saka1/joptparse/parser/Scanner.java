@@ -4,7 +4,9 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** Like StringScanner in Ruby. currently works only on Non-surrogate-pair. */
+/**
+ * Like StringScanner in Ruby. currently works only on Non-surrogate-pair.
+ */
 public class Scanner {
     private final String source;
     private int currentIndex;

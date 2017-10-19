@@ -1,8 +1,8 @@
 package net.saka1.joptparse;
 
+import net.saka1.joptparse.annotation.FailedReason;
 import net.saka1.joptparse.annotation.Operands;
 import net.saka1.joptparse.annotation.Option;
-import net.saka1.joptparse.annotation.FailedReason;
 import net.saka1.joptparse.annotation.ParseSucceeded;
 import net.saka1.joptparse.parser.ParseResult;
 import net.saka1.joptparse.parser.Parser;
@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 
 public class JOptParse<T> {
     private final Class<T> argsClazz;
+
     public JOptParse(Class<T> clazz) {
         this.argsClazz = clazz;
     }
@@ -30,7 +31,9 @@ public class JOptParse<T> {
         throw new IllegalStateException("no implementation yet."); //TODO
     }
 
-    /** Shorthand version of JOptParse#parse. */
+    /**
+     * Shorthand version of JOptParse#parse.
+     */
     public static <T> T parse(Class<T> clazz, String[] args) {
         return doParse(clazz, args);
     }
